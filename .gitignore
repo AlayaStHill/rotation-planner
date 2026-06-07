@@ -1,7 +1,26 @@
-# Frontend / Next.js
+# Frontend / package managers
 frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+!frontend/.yarn/patches
+!frontend/.yarn/plugins
+!frontend/.yarn/releases
+!frontend/.yarn/versions
+
+# Frontend / Next.js
 frontend/.next/
 frontend/out/
+frontend/build/
+frontend/coverage/
+frontend/.vercel/
+frontend/next-env.d.ts
+frontend/*.tsbuildinfo
+frontend/*.pem
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
 
 # Environment files
 .env
@@ -15,10 +34,15 @@ frontend/.env.*.local
 **/AGENTS.md
 **/CLAUDE.md
 
-# Backend / .NET
-backend/**/bin/
-backend/**/obj/
+# .NET / build outputs
+bin/
+obj/
 
 # OS / editor
 .DS_Store
 .vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
