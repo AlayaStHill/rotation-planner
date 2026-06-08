@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RotationPlanner.Domain\RotationPlanner.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\RotationGroups\" />
+    <Folder Include="Features\Matching\" />
+    <Folder Include="Features\Comparisons\" />
+    <Folder Include="Features\Schedules\" />
+    <Folder Include="Features\RotationGroups\" />
+    <Folder Include="Services\Scheduling\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.8" />
+  </ItemGroup>
+
+</Project>

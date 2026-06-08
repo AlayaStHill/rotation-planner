@@ -8,12 +8,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Content Remove="Controllers\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <None Remove="Controllers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.14.14" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Features\Comparisons\" />
+    <Folder Include="Features\Matching\" />
+    <Folder Include="Features\RotationGroups\" />
+    <Folder Include="Features\Schedules\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RotationPlanner.Application\RotationPlanner.Application.csproj" />
+    <ProjectReference Include="..\RotationPlanner.Infrastructure\RotationPlanner.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

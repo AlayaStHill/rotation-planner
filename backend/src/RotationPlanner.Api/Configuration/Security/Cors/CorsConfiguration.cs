@@ -1,4 +1,4 @@
-﻿namespace RotationPlanner.Api.Security.Cors;
+﻿namespace RotationPlanner.Api.Configuration.Security.Cors;
 
 public static class CorsConfiguration
 {

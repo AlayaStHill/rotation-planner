@@ -1,4 +1,4 @@
-﻿namespace RotationPlanner.Api.OpenApi;
+﻿namespace RotationPlanner.Api.Configuration.OpenApi;
 
 // OpenAPI setup for the API. This is separated from Program.cs to keep startup configuration cleaner.
 public static class OpenApiConfiguration

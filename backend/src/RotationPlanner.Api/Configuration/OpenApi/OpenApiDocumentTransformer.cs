@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 
-namespace RotationPlanner.Api.OpenApi;
+namespace RotationPlanner.Api.Configuration.OpenApi;
 // Provides an overall description of the API.
 public sealed class OpenApiDocumentTransformer : IOpenApiDocumentTransformer
 {

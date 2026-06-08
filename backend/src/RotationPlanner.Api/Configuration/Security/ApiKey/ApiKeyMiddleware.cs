@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace RotationPlanner.Api.Security.ApiKey;
+namespace RotationPlanner.Api.Configuration.Security.ApiKey;
 
 public sealed class ApiKeyMiddleware(RequestDelegate next, IOptions<ApiKeyOptions> options)
 {

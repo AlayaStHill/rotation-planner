@@ -1,3 +1,13 @@
 <Solution>
-  <Project Path="src/RotationPlanner.Api/RotationPlanner.Api.csproj" Id="c313ed23-cb76-4236-8032-5a561d9423d9" />
+  <Folder Name="/src/">
+    <Project Path="src/RotationPlanner.Api/RotationPlanner.Api.csproj" Id="c313ed23-cb76-4236-8032-5a561d9423d9" />
+    <Project Path="src/RotationPlanner.Application/RotationPlanner.Application.csproj" Id="dda6cb45-e971-41ae-9e2e-daf2671a38d9" />
+    <Project Path="src/RotationPlanner.Domain/RotationPlanner.Domain.csproj" Id="070da649-9d27-4ca1-b3cc-348a43ad036a" />
+    <Project Path="src/RotationPlanner.Infrastructure/RotationPlanner.Infrastructure.csproj" Id="2bd7e811-3538-4e16-b977-a5f98d704b91" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RotationPlanner.Application.Tests/RotationPlanner.Application.Tests.csproj" Id="33c365d2-49cc-4236-98ca-9d96cb37f39e" />
+    <Project Path="tests/RotationPlanner.Domain.Tests/RotationPlanner.Domain.Tests.csproj" Id="232fc1d4-2587-4245-8a48-1a1dfc137922" />
+  </Folder>
+  <Project Path="src/DontCommit/DontCommit.csproj" Id="82f84ee9-7525-4b8b-b5a2-531e990ec711" />
 </Solution>
