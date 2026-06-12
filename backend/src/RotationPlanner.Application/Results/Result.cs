@@ -15,9 +15,9 @@ public sealed record Result
     public static Result Success() => new(true);
     public static Result Failure(ResultError error) => new(false, error);
 
-    public static Result Failure(ErrorType type, string message, string? details = null)
+    public static Result Failure(ErrorType type, string code, string message, string? details = null)
     {
-        return Failure(new ResultError(type, message, details));
+        return Failure(new ResultError(type, code, message, details));
     }
 }
 
@@ -38,8 +38,8 @@ public sealed record Result<T>
     public static Result<T> Success(T value) => new(true, null, value);
     public static Result<T> Failure(ResultError error) => new(false, error, default);
 
-    public static Result<T> Failure(ErrorType type, string message, string? details = null)
+    public static Result<T> Failure(ErrorType type, string code, string message, string? details = null)
     {
-        return Failure(new ResultError(type, message, details));
+        return Failure(new ResultError(type, code, message, details));
     }
 }

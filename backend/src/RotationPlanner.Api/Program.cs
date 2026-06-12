@@ -1,5 +1,3 @@
-using RotationPlanner.Api.Configuration.OpenApi;
-using RotationPlanner.Api.Configuration.Security;
 using RotationPlanner.Api.Configuration.Security.ApiKey;
 using RotationPlanner.Api.Configuration.Security.Cors;
 using RotationPlanner.Api.Extensions;
