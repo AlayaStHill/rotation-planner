@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using RotationPlanner.Api.HttpProblemDetails;
 using System.Text.Json;
 
 namespace RotationPlanner.Api.Extensions;
@@ -13,7 +14,7 @@ public static class ExceptionHandlingExtensions
         app.UseExceptionHandler(exceptionPipeline =>
         {
             // Run registers the final middleware in the exception pipeline.
-            // The HttpContext contains the current request, response, and ASP.NET Core features for this error.
+            // HttpContext contains the current request, response, and ASP.NET Core features for this error.
             exceptionPipeline.Run(async (HttpContext httpContext) =>
             {
                 IExceptionHandlerFeature? exceptionFeature =
@@ -22,34 +23,16 @@ public static class ExceptionHandlingExtensions
                 // The property Error contains the actual exception-object, that was thrown
                 Exception? caughtException = exceptionFeature?.Error;
 
-                int statusCode = caughtException switch
-                {
-                    BadHttpRequestException => StatusCodes.Status400BadRequest,
-                    JsonException => StatusCodes.Status400BadRequest,
-                    _ => StatusCodes.Status500InternalServerError
-                };
+                int statusCode = GetStatusCode(caughtException);
 
-                string title = statusCode switch
-                {
-                    StatusCodes.Status400BadRequest => "Bad request",
-                    _ => "Internal server error"
-                };
-
-                string detail = caughtException switch
-                {
-                    BadHttpRequestException => "Invalid request format.",
-                    JsonException => "Invalid JSON payload.",
-                    _ when isDevelopment && caughtException is not null => caughtException.Message,
-                    _ => "An unexpected error occurred."
-                };
-
-                ProblemDetails problemDetails = new()
-                {
-                    Status = statusCode,
-                    Title = title,
-                    Detail = detail,
-                    Instance = httpContext.Request.Path
-                };
+                ProblemDetails problemDetails = ApiProblemDetailsFactory.Create
+                (
+                    type: GetProblemType(caughtException),
+                    statusCode: statusCode,
+                    title: GetProblemTitle(statusCode),
+                    detail: GetProblemDetail(caughtException, isDevelopment),
+                    instance: httpContext.Request.Path.ToString()
+                ); 
 
                 httpContext.Response.Clear();
                 httpContext.Response.StatusCode = statusCode;
@@ -58,5 +41,46 @@ public static class ExceptionHandlingExtensions
                 await httpContext.Response.WriteAsJsonAsync(problemDetails);
             });
         });
+    }
+
+
+    private static int GetStatusCode(Exception? exception)
+    {
+        return exception switch
+        {
+            BadHttpRequestException => StatusCodes.Status400BadRequest,
+            JsonException => StatusCodes.Status400BadRequest,
+            _ => StatusCodes.Status500InternalServerError
+        };
+    }
+
+    private static string GetProblemType(Exception? exception)
+    {
+        return exception switch
+        {
+            BadHttpRequestException => ProblemTypes.HttpInvalidRequest,
+            JsonException => ProblemTypes.JsonInvalidPayload,
+            _ => ProblemTypes.UnexpectedException
+        };
+    }
+
+    private static string GetProblemTitle(int statusCode)
+    {
+        return statusCode switch
+        {
+            StatusCodes.Status400BadRequest => "Bad request",
+            _ => "Internal server error"
+        };
+    }
+
+    private static string GetProblemDetail(Exception? exception, bool isDevelopment)
+    {
+        return exception switch
+        {
+            BadHttpRequestException => "Invalid request format.",
+            JsonException => "Invalid JSON payload.",
+            _ when isDevelopment && exception is not null => exception.Message,
+            _ => "An unexpected error occurred."
+        };
     }
 }
