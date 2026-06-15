@@ -1,6 +1,8 @@
+using RotationPlanner.Api.Configuration.OpenApi;
+using RotationPlanner.Api.Configuration.Security;
 using RotationPlanner.Api.Configuration.Security.ApiKey;
 using RotationPlanner.Api.Configuration.Security.Cors;
-using RotationPlanner.Api.Extensions;
+using RotationPlanner.Api.Responses.ErrorHandling;
 using RotationPlanner.Application.Extensions;
 using RotationPlanner.Infrastructure.Extensions;
 using Scalar.AspNetCore;
@@ -25,7 +27,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors(CorsConfiguration.FrontendPolicy);
+app.UseCors(CorsConfigurationExtensions.FrontendPolicy);
 
 app.UseMiddleware<ApiKeyMiddleware>();
 
