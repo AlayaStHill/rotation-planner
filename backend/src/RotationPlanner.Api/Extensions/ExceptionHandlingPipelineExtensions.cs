@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using RotationPlanner.Api.HttpProblemDetails;
+using RotationPlanner.Api.Responses.Errors;
 using System.Text.Json;
 
 namespace RotationPlanner.Api.Extensions;
 
-public static class ExceptionHandlingExtensions
+public static class ExceptionHandlingPipelineExtensions
 {
     public static void UseGlobalExceptionHandling(this WebApplication app)
     {
@@ -25,7 +25,7 @@ public static class ExceptionHandlingExtensions
 
                 int statusCode = GetStatusCode(caughtException);
 
-                ProblemDetails problemDetails = ApiProblemDetailsFactory.Create
+                ProblemDetails problemDetails = ProblemDetailsBuilder.Create
                 (
                     type: GetProblemType(caughtException),
                     statusCode: statusCode,

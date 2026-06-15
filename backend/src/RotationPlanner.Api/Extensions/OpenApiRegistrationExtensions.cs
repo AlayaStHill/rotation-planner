@@ -2,7 +2,7 @@
 
 namespace RotationPlanner.Api.Extensions;
 
-public static class OpenApiExtensions
+public static class OpenApiRegistrationExtensions
 {
     public static IServiceCollection AddOpenApiConfiguration(this IServiceCollection services)
     {

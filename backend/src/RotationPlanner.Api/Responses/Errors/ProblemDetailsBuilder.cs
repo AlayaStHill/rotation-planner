@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace RotationPlanner.Api.HttpProblemDetails;
+namespace RotationPlanner.Api.Responses.Errors;
 
-public static class ApiProblemDetailsFactory
+public static class ProblemDetailsBuilder
 {
     public static ProblemDetails Create(string type, int statusCode, string title, string detail, string? instance = null)
     {

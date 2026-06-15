@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RotationPlanner.Api.HttpProblemDetails;
+using RotationPlanner.Api.Responses.Errors;
 using RotationPlanner.Application.Results;
 
-namespace RotationPlanner.Api.Mapping;
+namespace RotationPlanner.Api.Responses.Mapping;
 
 public static class ResultMappingExtensions
 {
@@ -29,7 +29,7 @@ public static class ResultMappingExtensions
 
         int statusCode = GetStatusCode(error.Type);
 
-        ProblemDetails problemDetails = ApiProblemDetailsFactory.Create
+        ProblemDetails problemDetails = ProblemDetailsBuilder.Create
         (
             type: error.Code,
             statusCode: statusCode,
@@ -53,7 +53,7 @@ public static class ResultMappingExtensions
     {
         const int statusCode = StatusCodes.Status500InternalServerError;
 
-        ProblemDetails problemDetails = ApiProblemDetailsFactory.Create
+        ProblemDetails problemDetails = ProblemDetailsBuilder.Create
         (
             type: ProblemTypes.ApplicationResultMissingError,
             statusCode: statusCode,
