@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RotationPlanner.Api.Responses.Errors;
+using RotationPlanner.Api.Responses.ErrorHandling;
 using RotationPlanner.Application.Results;
 
 namespace RotationPlanner.Api.Responses.Mapping;

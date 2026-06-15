@@ -1,8 +1,6 @@
-﻿using RotationPlanner.Api.Configuration.OpenApi;
+﻿namespace RotationPlanner.Api.Configuration.OpenApi;
 
-namespace RotationPlanner.Api.Extensions;
-
-public static class OpenApiRegistrationExtensions
+public static class OpenApiConfigurationExtensions
 {
     public static IServiceCollection AddOpenApiConfiguration(this IServiceCollection services)
     {

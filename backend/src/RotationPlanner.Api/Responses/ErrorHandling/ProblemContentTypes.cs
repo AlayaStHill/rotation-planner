@@ -1,4 +1,4 @@
-﻿namespace RotationPlanner.Api.Responses.Errors;
+﻿namespace RotationPlanner.Api.Responses.ErrorHandling;
 
 public static class ProblemContentTypes
 {

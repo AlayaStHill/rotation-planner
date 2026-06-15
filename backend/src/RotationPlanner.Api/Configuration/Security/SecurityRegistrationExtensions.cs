@@ -1,7 +1,7 @@
 ﻿using RotationPlanner.Api.Configuration.Security.ApiKey;
 using RotationPlanner.Api.Configuration.Security.Cors;
 
-namespace RotationPlanner.Api.Extensions;
+namespace RotationPlanner.Api.Configuration.Security;
 
 public static class SecurityRegistrationExtensions
 {
@@ -9,7 +9,7 @@ public static class SecurityRegistrationExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddCorsConfiguration();
+        services.AddFrontendCors();
         services.AddApiKeyConfiguration(configuration);
 
         return services.AddSecurityConfigurations(configuration);

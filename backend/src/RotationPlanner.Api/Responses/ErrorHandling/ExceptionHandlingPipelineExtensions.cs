@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using RotationPlanner.Api.Responses.Errors;
 using System.Text.Json;
 
-namespace RotationPlanner.Api.Extensions;
+namespace RotationPlanner.Api.Responses.ErrorHandling;
 
 public static class ExceptionHandlingPipelineExtensions
 {

@@ -1,10 +1,10 @@
 ﻿namespace RotationPlanner.Api.Configuration.Security.Cors;
 
-public static class CorsConfiguration
+public static class CorsConfigurationExtensions
 {
     public const string FrontendPolicy = "Frontend";
 
-    public static IServiceCollection AddCorsConfiguration(this IServiceCollection services)
+    public static IServiceCollection AddFrontendCors(this IServiceCollection services)
     {
         services.AddCors(options =>
         {

@@ -3,6 +3,6 @@
 public sealed class ApiKeyOptions
 {
     public const string SectionName = "ApiKey";
-    public string HeaderName { get; init; } = "x-api-key";
+    public string HeaderName { get; init; } = "X-Api-Key";
     public string Value { get; init; } = null!;
 }

@@ -1,6 +1,6 @@
 ﻿namespace RotationPlanner.Api.Configuration.Security.ApiKey;
 
-public static class ApiKeyConfiguration
+public static class ApiKeyConfigurationExtensions
 {
     public static IServiceCollection AddApiKeyConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
