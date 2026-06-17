@@ -1,4 +1,4 @@
-﻿using RotationPlanner.Api.Configuration.Security.ApiKey;
+﻿using RotationPlanner.Api.Configuration.Security.ApiKey.Extensions;
 using RotationPlanner.Api.Configuration.Security.Cors;
 
 namespace RotationPlanner.Api.Configuration.Security;

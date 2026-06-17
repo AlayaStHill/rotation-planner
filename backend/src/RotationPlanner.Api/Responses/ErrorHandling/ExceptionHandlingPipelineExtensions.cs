@@ -6,7 +6,7 @@ namespace RotationPlanner.Api.Responses.ErrorHandling;
 
 public static class ExceptionHandlingPipelineExtensions
 {
-    public static void UseGlobalExceptionHandling(this WebApplication app)
+    public static WebApplication UseGlobalExceptionHandling(this WebApplication app)
     {
         bool isDevelopment = app.Environment.IsDevelopment();
 
@@ -16,11 +16,31 @@ public static class ExceptionHandlingPipelineExtensions
             // HttpContext contains the current request, response, and ASP.NET Core features for this error.
             exceptionPipeline.Run(async (HttpContext httpContext) =>
             {
-                IExceptionHandlerFeature? exceptionFeature =
-                    httpContext.Features.Get<IExceptionHandlerFeature>();
+                // This code runs inside a static extension method, so ILogger cannot be injected through a constructor.
+                // RequestServices gives access to the DI container for the current request scope.
+                // ILoggerFactory is used to create a logger with a category name for exception handling.
+                ILogger logger = httpContext.RequestServices
+                    .GetRequiredService<ILoggerFactory>()
+                    .CreateLogger("RotationPlanner.Api.ExceptionHandling");
 
-                // The property Error contains the actual exception-object, that was thrown
+                // When UseExceptionHandler catches an exception, ASP.NET Core stores error information
+                // in HttpContext.Features and exposes it through IExceptionHandlerFeature.
+                IExceptionHandlerFeature? exceptionFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
+
+                // Error contains the actual exception-object, that was thrown
                 Exception? caughtException = exceptionFeature?.Error;
+
+                if (caughtException is not null)
+                {
+                    // The message uses structured logging. {Method} and {Path} are named placeholders,
+                    // and the values are passed separately. This allows logging providers to store Method
+                    // and Path as searchable log fields.
+                    logger.LogError(
+                        caughtException,
+                        "An exception occurred while processing {Method} {Path}", 
+                        httpContext.Request.Method,
+                        httpContext.Request.Path);
+                }
 
                 int statusCode = GetStatusCode(caughtException);
 
@@ -40,6 +60,8 @@ public static class ExceptionHandlingPipelineExtensions
                 await httpContext.Response.WriteAsJsonAsync(problemDetails);
             });
         });
+
+        return app;
     }
 
 

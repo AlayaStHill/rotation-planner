@@ -1,4 +1,4 @@
-﻿namespace RotationPlanner.Api.Configuration.Security.ApiKey;
+﻿namespace RotationPlanner.Api.Configuration.Security.ApiKey.Extensions;
 
 public static class ApiKeyConfigurationExtensions
 {

@@ -1,6 +1,6 @@
 using RotationPlanner.Api.Configuration.OpenApi;
 using RotationPlanner.Api.Configuration.Security;
-using RotationPlanner.Api.Configuration.Security.ApiKey;
+using RotationPlanner.Api.Configuration.Security.ApiKey.Extensions;
 using RotationPlanner.Api.Configuration.Security.Cors;
 using RotationPlanner.Api.Logging.CorrelationIds;
 using RotationPlanner.Api.Responses.ErrorHandling;
@@ -32,7 +32,7 @@ app.UseCors(CorsConfigurationExtensions.FrontendPolicy);
 
 app.UseAuthorization();
 
-app.UseMiddleware<ApiKeyMiddleware>();
+app.UseApiKeyAuthentication();
 
 app.MapControllers();
 
