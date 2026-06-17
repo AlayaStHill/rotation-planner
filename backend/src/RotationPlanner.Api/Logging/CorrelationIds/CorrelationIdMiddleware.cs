@@ -1,4 +1,6 @@
-﻿namespace RotationPlanner.Api.Logging.CorrelationIds;
+﻿using System.Diagnostics;
+
+namespace RotationPlanner.Api.Logging.CorrelationIds;
 
 public sealed class CorrelationIdMiddleware(RequestDelegate next, ILogger<CorrelationIdMiddleware> logger)
 {
@@ -13,7 +15,7 @@ public sealed class CorrelationIdMiddleware(RequestDelegate next, ILogger<Correl
             ["CorrelationId"] = correlationId
         };
 
-        using (logger.BeginScope(scopeValues))
+        using (IDisposable? loggingScope = logger.BeginScope(scopeValues))
         {
             // Continue the request pipeline while the correlation id scope is active.
             await next(httpContext);
@@ -22,7 +24,26 @@ public sealed class CorrelationIdMiddleware(RequestDelegate next, ILogger<Correl
 
     private static string GetOrCreateCorrelationId(HttpContext httpContext)
     {
+        if (httpContext.Request.Headers.TryGetValue(CorrelationIdHeaderNames.CorrelationId,
+        out Microsoft.Extensions.Primitives.StringValues correlationIdValues))
+        {
+            string? correlationId = correlationIdValues.FirstOrDefault();
 
+            if (!string.IsNullOrWhiteSpace(correlationId))
+            {
+                return correlationId;
+            }
+        }
+
+        string? traceId = Activity.Current?.TraceId.ToString();
+
+        if (!string.IsNullOrWhiteSpace(traceId))
+        {
+            return traceId;
+        }
+
+        return Guid.NewGuid().ToString("N");
     }
-
 }
+
+
