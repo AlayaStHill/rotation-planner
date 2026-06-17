@@ -2,6 +2,7 @@ using RotationPlanner.Api.Configuration.OpenApi;
 using RotationPlanner.Api.Configuration.Security;
 using RotationPlanner.Api.Configuration.Security.ApiKey;
 using RotationPlanner.Api.Configuration.Security.Cors;
+using RotationPlanner.Api.Logging.CorrelationIds;
 using RotationPlanner.Api.Responses.ErrorHandling;
 using RotationPlanner.Application.Extensions;
 using RotationPlanner.Infrastructure.Extensions;
@@ -18,6 +19,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseCorrelationId();
+
 app.UseGlobalExceptionHandling();
 
 app.MapOpenApi();
@@ -25,9 +28,9 @@ app.MapScalarApiReference("/docs");
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseCors(CorsConfigurationExtensions.FrontendPolicy);
+
+app.UseAuthorization();
 
 app.UseMiddleware<ApiKeyMiddleware>();
 
