@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RotationPlanner.Api.Logging.CorrelationIds;
 
 public sealed class CorrelationIdMiddleware(RequestDelegate next, ILogger<CorrelationIdMiddleware> logger)
 {
+    private const int MaxCorrelationIdLength = 128;
+
     public async Task InvokeAsync(HttpContext httpContext)
     {
         string correlationId = GetOrCreateCorrelationId(httpContext);
@@ -29,7 +32,7 @@ public sealed class CorrelationIdMiddleware(RequestDelegate next, ILogger<Correl
         {
             string? correlationId = correlationIdValues.FirstOrDefault();
 
-            if (!string.IsNullOrWhiteSpace(correlationId))
+            if (IsValidCorrelationId(correlationId))
             {
                 return correlationId;
             }
@@ -37,12 +40,44 @@ public sealed class CorrelationIdMiddleware(RequestDelegate next, ILogger<Correl
 
         string? traceId = Activity.Current?.TraceId.ToString();
 
-        if (!string.IsNullOrWhiteSpace(traceId))
+        if (IsValidCorrelationId(traceId))
         {
             return traceId;
         }
 
+        return CreateCorrelationId();
+    }
+
+    private static string CreateCorrelationId()
+    {
         return Guid.NewGuid().ToString("N");
+    }
+
+    private static bool IsValidCorrelationId([NotNullWhen(true)] string? correlationId)
+    {
+        if (string.IsNullOrWhiteSpace(correlationId))
+        {
+            return false;
+        }
+
+        if (correlationId.Length > MaxCorrelationIdLength)
+        {
+            return false;
+        }
+
+        // A string can be treated as a sequence of chars.
+        // All is a LINQ method that checks all elements in a sequence and returns true only if all satisfy a condition. The condition is defiend by IsAllowedCorrelationIdCharacter, which is called for each of the characters. 
+        return correlationId.All(IsAllowedCorrelationIdCharacter);
+    }
+    
+    private static bool IsAllowedCorrelationIdCharacter(char character)
+    {
+        return character is >= 'a' and <= 'z'
+            || character is >= 'A' and <= 'Z'
+            || character is >= '0' and <= '9'
+            || character == '-'
+            || character == '_'
+            || character == '.';
     }
 }
 
