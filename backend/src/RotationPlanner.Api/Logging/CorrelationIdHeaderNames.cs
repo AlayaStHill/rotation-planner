@@ -1,4 +1,4 @@
-﻿namespace RotationPlanner.Api.Logging.CorrelationIds;
+﻿namespace RotationPlanner.Api.Logging;
 
 public static class CorrelationIdHeaderNames
 {

@@ -48,3 +48,5 @@ obj/
 *.sln.docstates
 
 backend/src/DontCommit/
+
+docs/private/

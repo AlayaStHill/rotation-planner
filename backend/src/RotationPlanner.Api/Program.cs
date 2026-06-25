@@ -2,7 +2,7 @@ using RotationPlanner.Api.Configuration.OpenApi;
 using RotationPlanner.Api.Configuration.Security;
 using RotationPlanner.Api.Configuration.Security.ApiKey.Extensions;
 using RotationPlanner.Api.Configuration.Security.Cors;
-using RotationPlanner.Api.Logging.CorrelationIds;
+using RotationPlanner.Api.Logging;
 using RotationPlanner.Api.Responses.ErrorHandling;
 using RotationPlanner.Application.Extensions;
 using RotationPlanner.Infrastructure.Extensions;
