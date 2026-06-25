@@ -1,5 +1,8 @@
-﻿namespace RotationPlanner.Application.Abstractions.Messaging;
+﻿using RotationPlanner.Application.Results;
 
-public interface IQueryHandler
+namespace RotationPlanner.Application.Abstractions.Messaging;
+
+public interface IQueryHandler<TQuery, TResponse> where TQuery : IQuery<TResponse>
 {
+    Task<Result<TResponse>> HandleAsync(TQuery query, CancellationToken cancellationToken = default);
 }
